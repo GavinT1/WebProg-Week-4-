@@ -96,7 +96,25 @@ app.put("/customers/:id", async (req, res) => {
 
     res.status(201).json({
       data: result,
-      message: "Customer created successfully.",
+      message: "Customer updated successfully.",
+    });
+  } catch(error) {
+    res 
+      .status(500)
+      .json({ message: "Internal Server Error.", error: error.message });
+  }
+
+});
+
+app.delete("/customers/:id", async (req, res) => {
+  try {
+    const customerID = new mongodb.ObjectId(req.params.id);
+
+    const result = await customerCollections.deleteOne({ _id: customerID });
+
+    res.status(201).json({
+      data: result,
+      message: "Customer deleted successfully.",
     });
   } catch(error) {
     res 
